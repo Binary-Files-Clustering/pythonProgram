@@ -1,0 +1,4 @@
+cd "c:\Users\maya\MyGit\Binary File Clustering(python)\cuckoo"
+cd "c:\Users\maya\MyGit\Binary File Clustering(python)\cuckoo\utils"
+c:\Python27\python.exe submit.py --url file:///c:/temp/ConsoleApplication1.exe
+c:\Python27\python.exe cuckoo.py
