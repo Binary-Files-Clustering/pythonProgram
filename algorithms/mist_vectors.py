@@ -1,3 +1,6 @@
+from math import sqrt
+
+
 class MistInstruction:
     def __init__(self, inst_str):
         self.categ = int(inst_str[:inst_str.find(" ")], 16)
@@ -29,6 +32,9 @@ class InstructionSet:
 
 
 class SparseVector:
+    """
+    ATTENTION! The dictionary keys are of type InstructionSet just FYI.
+    """
     def __init__(self):
         self.values = {}
 
@@ -40,6 +46,29 @@ class SparseVector:
     def __setitem__(self, key, value):
         self.values[key] = value
 
+    def normal(self):
+        return sqrt(sum(pow(val, 2) for val in self.values.values()))
+
+    def scale(self):
+        normal = self.normal()
+        for key in self.values:
+            self.values[key] /= normal
+
+
+class MISTVector:
+    """
+    ATTENTION! The dictionary keys are of type InstructionSet just FYI.
+    """
+    def __init__(self, dir_path, file_name):
+        self.vec = create_vector_from_file(dir_path+file_name)
+        self.name = file_name[:file_name.find(".")]
+
+    def __getitem__(self, item):
+        return self.vec[item]
+
+    def __setitem__(self, key, value):
+        self.vec[key] = value
+
 
 def create_vector_from_file(mist_file_path):
     Q = 2
@@ -50,9 +79,11 @@ def create_vector_from_file(mist_file_path):
     for i in xrange(len(str_instructions)-Q):
         key = InstructionSet([MistInstruction(str_instructions[i+j]) for j in xrange(Q)])
         if key in vec:
-            vec[key] = vec[key]+1
+            vec[key] += 1
         else:
             vec[key] = 1
-
+    vec.scale()
     return vec
+
+
 
