@@ -9,3 +9,4 @@ class SparseVector:
 
     def __setitem__(self, key, value):
         self.values[key] = value
+
