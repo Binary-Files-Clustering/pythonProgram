@@ -72,9 +72,8 @@ class MISTVector:
 
 def create_vector_from_file(mist_file_path):
     Q = 2
-    file = open(mist_file_path)
-    str_instructions = file.readlines()
-    file.close()
+    with open(mist_file_path) as f:
+        str_instructions = f.readlines()
     vec = SparseVector()
     for i in xrange(len(str_instructions)-Q):
         key = InstructionSet([MistInstruction(str_instructions[i+j]) for j in xrange(Q)])
